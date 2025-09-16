@@ -10,7 +10,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.vibecode.mafteiachsources",
-      "buildNumber": "12",
+      "buildNumber": "13",
       "infoPlist": {
         "NSCameraUsageDescription": "This app may use the camera for enhanced features and functionality.",
         "NSContactsUsageDescription": "This app may access contacts to provide personalized experiences.",
