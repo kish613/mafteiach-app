@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { View, Text, Platform } from "react-native";
-import Animated, { useSharedValue, withTiming, useAnimatedStyle, runOnJS } from "react-native-reanimated";
+import React, { useEffect, useRef } from "react";
+import { View, Text, Platform, Animated, Easing } from "react-native";
 import WoodBackground from "./WoodBackground";
 import AppLogo from "./AppLogo";
 
@@ -11,30 +10,48 @@ interface StartupSplashProps {
 }
 
 export default function StartupSplash({ visible, onDone, durationMs = 1600 }: StartupSplashProps) {
-  const opacity = useSharedValue(visible ? 1 : 0);
+  const opacity = useRef(new Animated.Value(visible ? 1 : 0)).current;
 
   useEffect(() => {
+    let cancelled = false;
     if (visible) {
-      opacity.value = withTiming(1, { duration: 200 });
-      const t = setTimeout(() => {
-        opacity.value = withTiming(0, { duration: 320 }, (finished) => {
-          if (finished && onDone) runOnJS(onDone)();
-        });
-      }, durationMs);
-      return () => clearTimeout(t);
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 200,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }).start(() => {
+        const t = setTimeout(() => {
+          Animated.timing(opacity, {
+            toValue: 0,
+            duration: 320,
+            easing: Easing.in(Easing.quad),
+            useNativeDriver: true,
+          }).start(({ finished }) => {
+            if (finished && !cancelled && onDone) onDone();
+          });
+        }, durationMs);
+        // cleanup timeout if unmounts early
+        return () => clearTimeout(t);
+      });
     } else {
-      opacity.value = withTiming(0, { duration: 200 });
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
     }
-  }, [visible, durationMs]);
+    return () => {
+      cancelled = true;
+    };
+  }, [visible, durationMs, onDone, opacity]);
 
-  const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
-
-  if (!visible && opacity.value === 0) return null;
+  if (!visible) return null;
 
   return (
     <Animated.View
       pointerEvents={visible ? "auto" : "none"}
-      style={[{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }, animatedStyle]}
+      style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, opacity }}
     >
       <WoodBackground>
         <View className="flex-1 items-center justify-center px-6">
