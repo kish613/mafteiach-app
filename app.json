@@ -28,7 +28,6 @@
         {
           "ios": {
             "deploymentTarget": "15.1",
-            "useFrameworks": "static",
             "newArchEnabled": false,
             "swiftVersion": "5.0"
           }
