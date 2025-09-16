@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hebrew text support */
+.hebrew-text {
+  direction: rtl;
+  text-align: right;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.mixed-text {
+  direction: ltr;
+  text-align: left;
+}
+
+/* RTL layout support */
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
+}

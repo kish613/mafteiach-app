@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Mafteiach Sources",
+    "slug": "mafteiach",
+    "scheme": "vibecode",
+    "version": "1.0.2",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vibecode.mafteiachsources",
+      "buildNumber": "12",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app may use the camera for enhanced features and functionality.",
+        "NSContactsUsageDescription": "This app may access contacts to provide personalized experiences.",
+        "NSCalendarsUsageDescription": "This app may access calendar data to provide scheduling features.",
+        "NSLocationWhenInUseUsageDescription": "This app may use location services to provide location-based features.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "edgeToEdgeEnabled": true
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.1",
+            "useFrameworks": "static",
+            "newArchEnabled": false,
+            "swiftVersion": "5.0"
+          }
+        }
+      ]
+    ],
+    "icon": "./icon.png",
+    "extra": {
+      "eas": {
+        "projectId": "a0c46d39-2001-4fe2-8154-0f7cfa7e71d2"
+      }
+    }
+  }
+}
